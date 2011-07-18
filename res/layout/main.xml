@@ -3,10 +3,12 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:gravity="center"
     >
 	<VideoView android:id="@+id/videoView"
-    	android:layout_height="fill_parent"
-    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:layout_gravity="center"
     	>
     </VideoView>
 </LinearLayout>
