@@ -29,10 +29,12 @@ public class WebInputActivity extends Activity {
 	    @Override
 	    public boolean shouldOverrideUrlLoading(WebView view, String url) {
 	    	
-	    	Intent i = new Intent();
+	    	//Intent i = new Intent();
+	    	Intent i = new Intent(WebInputActivity.this, SimpleHttpVideoPlayerActivity.class);
 	    	i.putExtra("video_url", url);
-	    	setResult(SimpleHttpVideoPlayerActivity.RESULT_OK, i);
-	    	finish();
+	    	//setResult(SimpleHttpVideoPlayerActivity.RESULT_OK, i);
+	    	//finish();
+	    	startActivity(i);
 	    	
 	        return true;
 	    }

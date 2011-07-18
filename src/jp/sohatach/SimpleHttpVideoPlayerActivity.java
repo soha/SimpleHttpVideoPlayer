@@ -33,6 +33,15 @@ public class SimpleHttpVideoPlayerActivity extends Activity {
 
 		videoView = (VideoView) findViewById(R.id.videoView);
 		
+		Intent i = getIntent();
+		if(i != null) {
+			String url = i.getStringExtra("video_url");
+			if(url != null && !url.trim().equals("")) {
+				mediaPath = url;
+				playVideo();
+			}
+		}
+		
 		//mediaPath = "http://www.gomplayer.jp/support/down/mp4_mpeg4_aac.mp4";
 		//mediaPath = "/sdcard/mpeg4.mp4";
 //
@@ -115,8 +124,8 @@ public class SimpleHttpVideoPlayerActivity extends Activity {
 					}else{
 						Intent i = new Intent(SimpleHttpVideoPlayerActivity.this, WebInputActivity.class);
 						i.putExtra("web_url", url);
-						//startActivity(i);
-						startActivityForResult(i, WEB_REQUEST_CODE);
+						startActivity(i);
+						//startActivityForResult(i, WEB_REQUEST_CODE);
 						//webView.loadUrl(url);
 					}
 				}
@@ -125,18 +134,18 @@ public class SimpleHttpVideoPlayerActivity extends Activity {
 	    alertDialog.show();
 	}
 	
-	/**
-	 * Webì¸óÕâÊñ Ç©ÇÁÇÃñﬂÇËèàóù
-	 */
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(WEB_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
-			if(data != null) {
-				String url = data.getStringExtra("video_url");
-				if(url != null && !url.trim().equals("")) {
-					mediaPath = url;
-					playVideo();
-				}
-			}
-		}
-	}
+//	/**
+//	 * Webì¸óÕâÊñ Ç©ÇÁÇÃñﬂÇËèàóù
+//	 */
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		if(WEB_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
+//			if(data != null) {
+//				String url = data.getStringExtra("video_url");
+//				if(url != null && !url.trim().equals("")) {
+//					mediaPath = url;
+//					playVideo();
+//				}
+//			}
+//		}
+//	}
 }
