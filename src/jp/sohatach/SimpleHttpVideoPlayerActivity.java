@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,8 @@ import android.widget.VideoView;
 public class SimpleHttpVideoPlayerActivity extends Activity {
 	private String mediaPath;
 	private VideoView videoView;
+	private static final String VIDEO_PATH = "VIDEO_PATH";
+	private static final String WEB_PATH = "WEB_PATH";
 	public static final int WEB_REQUEST_CODE = 0;
 	public static final int RESULT_OK = 0;
 	
@@ -108,7 +111,17 @@ public class SimpleHttpVideoPlayerActivity extends Activity {
 	private void _showDialog(int type) {
 	    final EditText editText = new EditText(this);
 	    final int inputType = type;
+	    final SharedPreferences pref = getSharedPreferences(getString(R.string.app_name), Activity.MODE_PRIVATE);
 
+	    //前回入力したURLの取得
+	    String prevUrl = "";
+	    if(VIDEO_URL == inputType) {
+	    	prevUrl = pref.getString(VIDEO_PATH, "");
+	    }else{
+	    	prevUrl = pref.getString(WEB_PATH, "");
+	    }
+	    editText.setText(prevUrl);
+	    
 	    final AlertDialog alertDialog = new AlertDialog.Builder(this)
 	        .setTitle("input URL")
 	        .setView(editText)
@@ -119,9 +132,16 @@ public class SimpleHttpVideoPlayerActivity extends Activity {
 						return;
 					}
 					if(VIDEO_URL == inputType) {
+						//入力された値を覚えておく
+						pref.edit().putString(VIDEO_PATH, url).commit();
+
 						mediaPath = url;
 						playVideo();
 					}else{
+						//入力された値を覚えておく
+						pref.edit().putString(WEB_PATH, url).commit();
+						String tmp = pref.getString(WEB_PATH, "");
+
 						Intent i = new Intent(SimpleHttpVideoPlayerActivity.this, WebInputActivity.class);
 						i.putExtra("web_url", url);
 						startActivity(i);
@@ -131,6 +151,8 @@ public class SimpleHttpVideoPlayerActivity extends Activity {
 				}
 			}).setNegativeButton("Cancel", null)
 	        .create();
+	    
+	    //ダイアログ起動
 	    alertDialog.show();
 	}
 	
