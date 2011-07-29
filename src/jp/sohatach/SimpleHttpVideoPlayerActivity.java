@@ -140,7 +140,6 @@ public class SimpleHttpVideoPlayerActivity extends Activity {
 					}else{
 						//“ü—Í‚³‚ê‚½’l‚ðŠo‚¦‚Ä‚¨‚­
 						pref.edit().putString(WEB_PATH, url).commit();
-						String tmp = pref.getString(WEB_PATH, "");
 
 						Intent i = new Intent(SimpleHttpVideoPlayerActivity.this, WebInputActivity.class);
 						i.putExtra("web_url", url);
